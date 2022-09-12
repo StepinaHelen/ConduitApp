@@ -1,0 +1,8 @@
+<conduit-loading *ngIf="isLoading$ | async"></conduit-loading>
+<conduit-error-message *ngIf="error$ | async"></conduit-error-message>
+<div class="sidebar" *ngIf="tags$ | async">
+  <p>Popular tags</p>
+  <div class="tag-list">
+    <a *ngFor="let tag of tags$ | async" class="tag-default tag-pill" [routerLink]="['/tags', tag]">{{tag}} </a>
+  </div>
+</div>

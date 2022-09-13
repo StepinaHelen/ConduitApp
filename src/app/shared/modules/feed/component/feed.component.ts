@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { FeedService } from 'src/app/shared/service/feed.service';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnChanges {
   @Input() apiUrl: string;
   isLoading$: Observable<boolean>
   error$: Observable<string | null>
@@ -27,11 +27,19 @@ export class FeedComponent implements OnInit {
 
   constructor(private store: Store, private router: Router,
     private route: ActivatedRoute, private feedService: FeedService) { }
+  
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    const isApiChanged = !changes.apiUrl.firstChange && changes.apiUrl.currentValue !== changes.apiUrl.previousValue
+    if (isApiChanged) {
+      this.fetchFeed()
+    }
+  }
 
   ngOnInit(): void {
-    this.feedService.getFeed('/articles?limit=15').subscribe(data => {
-      this.feedMount = data.articlesCount;
-    })
+    // this.feedService.getFeed('/articles?limit=15').subscribe(data => {
+    //   this.feedMount = data.articlesCount;
+    // })
     this.initializeValues()
     this.initializaListeners()
   }
@@ -41,14 +49,14 @@ export class FeedComponent implements OnInit {
 
     const parsedUrl = parseUrl(this.apiUrl)
     const stringifiedParams = stringify({
-      limit: this.limit,
-      offset,
+      // limit: this.limit,
+      // offset,
       ...parsedUrl.query
     })
 
-    // const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
-    // this.store.dispatch(getFeedAction({ url: apiUrlWithParams }))
-    this.store.dispatch(getFeedAction({ url: parsedUrl.url }))
+    const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`
+    this.store.dispatch(getFeedAction({ url: apiUrlWithParams }))
+    // this.store.dispatch(getFeedAction({ url: parsedUrl.url }))
   }
 
 

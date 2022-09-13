@@ -1,10 +1,9 @@
-
 <div class="home-page">
     <conduit-banner></conduit-banner>
     <div class="container page">
         <div class="row">
             <div class="col-md-9">
-                <conduit-feed-toggler></conduit-feed-toggler>
+                <conduit-feed-toggler [tagName]="tagName"></conduit-feed-toggler>
                 <conduit-feed [apiUrl]="apiUrl"></conduit-feed>
             </div>
             <div class="col-md-3">

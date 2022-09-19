@@ -12,3 +12,9 @@ tagList: string[]
 title: string
 updatedAt: string
 }
+
+
+export interface GetArticleResponseInterface {
+article: ArticleInterface
+}
+

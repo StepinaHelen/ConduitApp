@@ -12,6 +12,6 @@ import { BackEndErrorsComponent } from './back-end-errors.component';
   imports: [
     CommonModule
   ],
-  exports :[BackEndErrorsComponent]
+  exports: [BackEndErrorsComponent]
 })
 export class BackEndErrorsModule { }

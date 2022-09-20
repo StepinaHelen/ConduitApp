@@ -14,6 +14,7 @@ import { FeedService } from 'src/app/shared/service/feed.service';
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss']
 })
+
 export class FeedComponent implements OnInit, OnChanges {
   @Input() apiUrl: string;
   isLoading$: Observable<boolean>
